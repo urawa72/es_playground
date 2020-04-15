@@ -1,0 +1,30 @@
+version: '3.7'
+services:
+  # Elasticsearch
+  es_sample:
+    build: .
+    container_name: es_sample
+    environment:
+      - cluster.name=sample-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9300:9200"
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+
+  # kibana
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:6.7.2
+  #   container_name: manon_kibana
+  #   environment:
+  #     SERVER_NAME: localhost:5602
+  #     ELASTICSEARCH_URL: http://es_sample:9200
+  #   ports:
+  #     - "5602:5601"
+  #   depends_on:
+  #     - es
